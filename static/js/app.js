@@ -1,31 +1,73 @@
 function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
-
+  // if (error) throw error;
   // Use `d3.json` to fetch the metadata for a sample
   var url = "/metadata/" + sample;
-  console.log(url); 
-  d3.json(url).then(function(data) {
-    var sampleData = data;
-    console.log(sampleData);
-  });
-  
-
-    // Use d3 to select the panel with id of `#sample-metadata`
-
+  // console.log(url); 
+  d3.json(url).then(function(sample) {
+    var sampleMetadata = sample;
+    console.log(sampleMetadata);
+        // Use d3 to select the panel with id of `#sample-metadata`
+    var selector = d3.select("#sample-metadata");
     // Use `.html("") to clear any existing metadata
-
+    selector.html("");
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
+    for (let [key, value] of Object.entries(sampleMetadata)) {
+      selector.append("li")
+      .text(`${key}: ${value}`)
+      .property("key", key)
+      .property("value", value);
+    }
+  });
 
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 }
 
 function buildCharts(sample) {
-
   // @TODO: Use `d3.json` to fetch the sample data for the plots
+var url = "/samples/" + sample;
+d3.json(url).then(function(sample) {
+  var sampleData = sample;
+  console.log(sampleData);
+  var selector = d3.select("#bubble");
+  selector.html("");
+  var trace = {
+    x: [sampleData.otu_ids],
+    y: [sampleData.sample_values],
+    marker: {
+      size: [sampleData.sample_values],
+      colors: [sampleData.otu_ids]
+    },
+    text: [sampleData.otu_labels]
+  };
+  var data = [trace];
+  console.log(data);
+  var layout = {
+    title: 'Bubble Chart - Sample ${sample}',
+    showlegend: false,
+    height: 600,
+    width: 600
+  };
+
+Plotly.newPlot("bubble", data, layout);
+
+})
+  
+// * Create a Bubble Chart that uses data from your samples route (`/samples/<sample>`) to display each sample.
+
+//   * Use `otu_ids` for the x values
+
+//   * Use `sample_values` for the y values
+
+//   * Use `sample_values` for the marker size
+
+//   * Use `otu_ids` for the marker colors
+
+//   * Use `otu_labels` for the text values
 
     // @TODO: Build a Bubble Chart using the sample data
 
