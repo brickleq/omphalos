@@ -22,7 +22,6 @@ function buildMetadata(sample) {
       .property("value", value);
     }
   });
-
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 }
@@ -30,9 +29,23 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 var url = "/samples/" + sample;
+var sampleName = sample;
 d3.json(url).then(function(sample) {
   var sampleData = sample;
   console.log(sampleData);
+
+  // * Create a Bubble Chart that uses data from your samples route (`/samples/<sample>`) to display each sample.
+
+//   * Use `otu_ids` for the x values
+
+//   * Use `sample_values` for the y values
+
+//   * Use `sample_values` for the marker size
+
+//   * Use `otu_ids` for the marker colors
+
+//   * Use `otu_labels` for the text values
+
   var selector = d3.select("#bubble");
   selector.html("");
   var trace = {
@@ -47,27 +60,16 @@ d3.json(url).then(function(sample) {
   var data = [trace];
   console.log(data);
   var layout = {
-    title: 'Bubble Chart - Sample ${sample}',
+    title: `Bubble Chart - Sample ${sampleName}`,
     showlegend: false,
     height: 600,
     width: 600
   };
-
-Plotly.newPlot("bubble", data, layout);
+  var myDiv = document.getElementById("bubble");
+  console.log([trace]);
+  Plotly.plot(myDiv, data, layout);
 
 })
-  
-// * Create a Bubble Chart that uses data from your samples route (`/samples/<sample>`) to display each sample.
-
-//   * Use `otu_ids` for the x values
-
-//   * Use `sample_values` for the y values
-
-//   * Use `sample_values` for the marker size
-
-//   * Use `otu_ids` for the marker colors
-
-//   * Use `otu_labels` for the text values
 
     // @TODO: Build a Bubble Chart using the sample data
 
