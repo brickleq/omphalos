@@ -24,6 +24,11 @@ function buildMetadata(sample) {
   });
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
+
+    // Placeholder for Gauge Chart:
+    var selector = d3.select("#gauge");
+    selector.html("");
+    selector.append()
 }
 
 function buildCharts(sample) {
@@ -32,56 +37,74 @@ var url = "/samples/" + sample;
 var sampleName = sample;
 d3.json(url).then(function(sample) {
   var sampleData = sample;
-  console.log(data);
-
+  console.log("sample_values: " + sampleData.sample_values);
+    // @TODO: Build a Bubble Chart using the sample data
   // * Create a Bubble Chart that uses data from your samples route (`/samples/<sample>`) to display each sample.
-
-//   * Use `otu_ids` for the x values
-
-//   * Use `sample_values` for the y values
-
-//   * Use `sample_values` for the marker size
-
-//   * Use `otu_ids` for the marker colors
-
-//   * Use `otu_labels` for the text values
   var normalized_otu_ids = normalize_array(sampleData.otu_ids);
   var selector = d3.select("#bubble");
   selector.html("");
   var trace = {
-    x: sampleData.otu_ids,
-    y: sampleData.sample_values,
+    x: sampleData.otu_ids, //   * Use `otu_ids` for the x values
+    y: sampleData.sample_values, //   * Use `sample_values` for the y values
     mode: "markers",
     marker: {
-      size: sampleData.sample_values,
+      size: sampleData.sample_values, //   * Use `sample_values` for the marker size
       colorscale: "Earth",
-      color: normalized_otu_ids,
+      color: normalized_otu_ids, //   * Use `otu_ids` for the marker colors
       symbol: "circle"
     },
-    text: sampleData.otu_labels,
+    text: sampleData.otu_labels, //   * Use `otu_labels` for the text values
     type: "scatter"
   };
-  console.log(sampleData.otu_ids);
-  console.log(normalized_otu_ids);
+  console.log("out_ids: " + sampleData.otu_ids);
+  console.log("normalized_otu_ids: " + normalized_otu_ids);
   var data = [trace];
-  console.log(data);
+  console.log("trace: " + data);
   var layout = {
     title: `Bubble Chart - Sample ${sampleName}`,
     showlegend: false,
     height: 600,
-    width: 600
+    width: 1200
   };
   var myDiv = document.getElementById("bubble");
-  console.log([trace]);
+  // console.log("trace: " + [trace]);
   Plotly.newPlot(myDiv, data, layout);
-
-})
-
-    // @TODO: Build a Bubble Chart using the sample data
-
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
+  
+  var selector = d3.select("#pie");
+  selector.html("");
+  var sampleData = Object.values(sampleData);
+  console.log("sampleData (array): " + sampleData);
+  var sortedSampleData = sampleData.sort(function(a,b) {return b.sample_values - a.sample_values});
+  console.log("sortedSampleData: " + sortedSampleData);
+  var topTenSampleValues = sortedSampleData[0].slice(-10);
+  console.log("Top ten sample_values: " + topTenSampleValues);
+  var topTenLabels = sortedSampleData[1].slice(-10);
+  console.log("Top ten otu_labels: " + topTenLabels);
+  var topTenIDs = sortedSampleData[2].slice(-10);
+  console.log("Top ten otu_ids: " + topTenIDs);
+  var pieChartColors = normalized_otu_ids.slice(-10);
+  console.log("Pie chart colors: " + pieChartColors);
+  var selector = d3.select("#pie");
+  selector.html("");
+  var data = [{
+    values: topTenSampleValues,
+    labels: topTenLabels,
+    text: topTenIDs,
+    hoverinfo: "labels",
+    //colors: pieChartColors,
+    type: "pie"
+  }];
+  var layout = {
+    height: 500,
+    width: 500,
+    showlegend: false
+  };
+  var myDiv = document.getElementById("pie");
+  Plotly.newPlot(myDiv, data, layout);
+})
 }
 
 function init() {
@@ -125,8 +148,7 @@ function normalize_array(arr) {
 }
 
 function event_listener() {
-  var selector = d3.select("#selDataselect");
-  selector.addEventListener("change",optionChanged);
+  document.getElementById("selDataset").addEventListener("change",optionChanged);
 }
 // Initialize the dashboard
 init();
