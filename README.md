@@ -51,7 +51,7 @@ Deploy your Flask app to Heroku.
 
 * Ask your Instructor and TAs for help!
 
-# Deployed app: https://mighty-ravine-11914.herokuapp.com/
+# ![Deployed app: https://mighty-ravine-11914.herokuapp.com/](https://mighty-ravine-11914.herokuapp.com/)
 
 ### Preview:
 ![Heroku Dashboard Preview](belly_button/Images/heroku_dashboard_preview.png)
