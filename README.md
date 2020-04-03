@@ -63,7 +63,7 @@ The following task is completely optional and is very advanced.
 
 * Update the chart whenever a new sample is selected
 
-![Weekly Washing Frequency Gauge](Images/gauge.png)
+![Weekly Washing Frequency Gauge](belly_button/Images/gauge.png)
 
 - - -
 
