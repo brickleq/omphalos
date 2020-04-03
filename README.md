@@ -51,6 +51,8 @@ Deploy your Flask app to Heroku.
 
 * Ask your Instructor and TAs for help!
 
+# Deployed app: https://mighty-ravine-11914.herokuapp.com/
+
 - - -
 
 ## Advanced Challenge Assignment (Optional)
