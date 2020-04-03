@@ -1,4 +1,4 @@
-# Belly Button Biodiversity
+# Brickey's Bionic Belly Button Biodiversity Dashboard
 
 ![Bacteria by filterforge.com](belly_button/Images/bacteria_by_filterforgedotcom.jpg)
 
